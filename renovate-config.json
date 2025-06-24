@@ -6,5 +6,8 @@
     "schedule:weekly",
     ":maintainLockFilesMonthly",
     ":assignAndReview(brianhelba)"
+  ],
+  "ignorePaths": [
+    ".python-version"
   ]
 }
