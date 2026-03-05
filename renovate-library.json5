@@ -20,6 +20,12 @@
   // For pep621, "auto" -> "replace", which may not create lock-only PRs for
   // in-range releases. Setting this explicitly ensures both ecosystems get
   // lock-only PRs for every in-range direct dependency update.
+  // Lock file maintenance (transitive dep refresh) is safe to automerge for
+  // libraries — consumers never see the lock file, and CI catches breakage.
+  "lockFileMaintenance": {
+    "automerge": true,
+  },
+
   "rangeStrategy": "update-lockfile",
 
   "packageRules": [
