@@ -1,0 +1,53 @@
+{
+  // Base Renovate preset for all Resonant repos (Python/uv and npm).
+  // Shared settings inherited by both library and project presets.
+  // Do not extend this directly — use renovate-library.json5 or renovate-project.json5.
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended",
+    "customManagers:biomeVersions",
+    "schedule:weekly",
+  ],
+
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 4am on the first day of the month"],
+  },
+
+  "packageRules": [
+    // Group all non-major updates into a single PR.
+    // Avoid group:all — it bundles major updates with minor/patch, making it
+    // impossible to review and merge them independently. If a major update
+    // fails CI, it blocks all the safe minor/patch updates too.
+    {
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "all non-major dependencies",
+      "groupSlug": "all-minor-patch",
+    },
+    // Separate each major update for individual review.
+    {
+      "matchUpdateTypes": ["major"],
+      "separateMultipleMajor": true,
+    },
+    // Group non-major dev tool updates into their own PR, separate from the
+    // main "all non-major" group. "dependency-groups" matches Python (PEP 735),
+    // "devDependencies" matches npm. This allows library presets to automerge
+    // dev tools independently. Major dev tool updates fall through to the
+    // separateMultipleMajor rule above for individual review.
+    {
+      "matchDepTypes": ["dependency-groups", "devDependencies"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "dev dependencies",
+      "groupSlug": "dev-deps",
+    },
+    // Group all non-major @biomejs/biome updates together (npm devDependencies,
+    // peerDependencies, and biome.jsonc schema from customManagers:biomeVersions).
+    // Matching by package name ensures all three stay in a single PR.
+    {
+      "matchPackageNames": ["@biomejs/biome"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "dev dependencies",
+      "groupSlug": "dev-deps",
+    },
+  ],
+}

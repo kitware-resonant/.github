@@ -1,0 +1,63 @@
+{
+  // Renovate preset for Resonant libraries (Python/uv and npm).
+  //
+  // Libraries use loose lower bounds (>= in Python, ^ in npm) for wide
+  // consumer compatibility. Renovate only updates the lock file for in-range
+  // releases and proposes manifest changes only for out-of-range (major) updates.
+  //
+  // Usage in your repo's .github/renovate.json5:
+  //   { "extends": ["github>kitware-resonant/.github:renovate-library.json5"] }
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>kitware-resonant/.github:renovate-base.json5",
+    ":assignAndReview(brianhelba)",
+  ],
+
+  // "update-lockfile" is the key choice for libraries:
+  // - In-range updates: only updates the lock file, leaves the manifest untouched
+  // - Out-of-range updates: updates both the manifest and lock file
+  // For npm, this is already the default ("auto" -> "update-lockfile").
+  // For pep621, "auto" -> "replace", which may not create lock-only PRs for
+  // in-range releases. Setting this explicitly ensures both ecosystems get
+  // lock-only PRs for every in-range direct dependency update.
+  "rangeStrategy": "update-lockfile",
+
+  "packageRules": [
+    // Automerge non-major dev tool updates (Python dependency-groups + npm
+    // devDependencies). The base config already groups these into a separate
+    // "dev dependencies" PR. They don't affect library consumers. Major dev
+    // tool updates are NOT automerged (they could break CI).
+    // Two rules because Renovate ANDs matchers within a rule (no OR support).
+    {
+      "matchDepTypes": ["dependency-groups", "devDependencies"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+    },
+    {
+      "matchPackageNames": ["@biomejs/biome"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+    },
+    // .python-version: for libraries, keep this at the oldest supported Python
+    // so developers locally use the minimum version.
+    // - dependencyDashboardApproval: updates show as checkboxes on the Dashboard,
+    //   no automatic PRs (avoids nagging about new Python versions)
+    // - separateMultipleMinor: one entry per minor (3.13, 3.14, etc.) so you
+    //   can bump one version at a time
+    // - "docker" versioning: treats version components as independent segments
+    //   (like Docker tags), so "3.12" stays "3.12" — not "3.12.0" or "3.12.11"
+    //
+    // LIMITATION: Renovate cannot auto-update requires-python in lockstep.
+    // When you approve a .python-version bump (e.g., 3.12 -> 3.13), you must
+    // manually update requires-python from ">=3.12" to ">=3.13".
+    {
+      "matchManagers": ["pyenv"],
+      "versioning": "docker",
+      "separateMultipleMinor": true,
+      "dependencyDashboardApproval": true,
+      "prBodyNotes": [
+        "**Remember:** also update `requires-python` in `pyproject.toml` to match the new Python version.",
+      ],
+    },
+  ],
+}
