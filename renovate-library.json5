@@ -44,6 +44,11 @@
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
     },
+    {
+      "matchPackageNames": ["django-stubs-ext"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+    },
     // .python-version: for libraries, keep this at the oldest supported Python
     // so developers locally use the minimum version.
     // - dependencyDashboardApproval: updates show as checkboxes on the Dashboard,
