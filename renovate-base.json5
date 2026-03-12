@@ -48,5 +48,15 @@
       "groupName": "dev dependencies",
       "groupSlug": "dev-deps",
     },
+    // django-stubs-ext is a runtime dependency (project.dependencies) that must
+    // stay in sync with django-stubs (in dependency-groups). Without this rule,
+    // they land in different PRs and uv lock fails because django-stubs requires
+    // django-stubs-ext >= its own version.
+    {
+      "matchPackageNames": ["django-stubs-ext"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "groupName": "dev dependencies",
+      "groupSlug": "dev-deps",
+    },
   ],
 }
