@@ -39,6 +39,24 @@
       "groupName": "dev dependencies",
       "groupSlug": "dev-deps",
     },
+    // django-stubs-ext is a runtime dependency that must stay in sync with
+    // django-stubs (dev dependency) for patch updates too.
+    {
+      "matchPackageNames": ["django-stubs-ext"],
+      "matchUpdateTypes": ["patch", "pin", "digest"],
+      "groupName": "dev dependencies",
+      "groupSlug": "dev-deps",
+    },
+    // Django minor versions are significant, so pull major+minor out of the
+    // "all non-major" group into their own PR. Group with django-stubs and
+    // django-stubs-ext since stubs major.minor tracks Django's version.
+    // Patch updates are independent and stay in their default groups.
+    {
+      "matchPackageNames": ["django", "django-stubs", "django-stubs-ext"],
+      "matchUpdateTypes": ["major", "minor"],
+      "groupName": "django",
+      "groupSlug": "django",
+    },
     // Group all non-major @biomejs/biome updates together (npm devDependencies,
     // peerDependencies, and biome.jsonc schema from customManagers:biomeVersions).
     // Matching by package name ensures all three stay in a single PR.
@@ -58,16 +76,6 @@
       "prBodyNotes": [
         "**Remember:** also update `requires-python` in `pyproject.toml` to match the new Python version.",
       ],
-    },
-    // django-stubs-ext is a runtime dependency (project.dependencies) that must
-    // stay in sync with django-stubs (in dependency-groups). Without this rule,
-    // they land in different PRs and uv lock fails because django-stubs requires
-    // django-stubs-ext >= its own version.
-    {
-      "matchPackageNames": ["django-stubs-ext"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "groupName": "dev dependencies",
-      "groupSlug": "dev-deps",
     },
   ],
 }
