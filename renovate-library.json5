@@ -49,26 +49,13 @@
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
     },
-    // .python-version: for libraries, keep this at the oldest supported Python
-    // so developers locally use the minimum version.
-    // - dependencyDashboardApproval: updates show as checkboxes on the Dashboard,
-    //   no automatic PRs (avoids nagging about new Python versions)
-    // - separateMultipleMinor: one entry per minor (3.13, 3.14, etc.) so you
-    //   can bump one version at a time
-    // - "docker" versioning: treats version components as independent segments
-    //   (like Docker tags), so "3.12" stays "3.12" — not "3.12.0" or "3.12.11"
-    //
-    // LIMITATION: Renovate cannot auto-update requires-python in lockstep.
-    // When you approve a .python-version bump (e.g., 3.12 -> 3.13), you must
-    // manually update requires-python from ">=3.12" to ">=3.13".
+    // .python-version: for libraries, keep at the oldest supported Python.
+    // - separateMultipleMinor: one PR per minor (3.13, 3.14) for incremental bumps
+    // - dependencyDashboardApproval: no automatic PRs, approve from Dashboard
     {
       "matchManagers": ["pyenv"],
-      "versioning": "docker",
       "separateMultipleMinor": true,
       "dependencyDashboardApproval": true,
-      "prBodyNotes": [
-        "**Remember:** also update `requires-python` in `pyproject.toml` to match the new Python version.",
-      ],
     },
   ],
 }

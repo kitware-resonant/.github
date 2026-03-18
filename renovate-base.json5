@@ -48,6 +48,17 @@
       "groupName": "dev dependencies",
       "groupSlug": "dev-deps",
     },
+    // .python-version: use "docker" versioning so "3.12" stays "3.12" (not
+    // "3.12.0" or "3.12.11"). Override the default PR title ("python Docker
+    // tag") to say "Python version". Remind to update requires-python.
+    {
+      "matchManagers": ["pyenv"],
+      "versioning": "docker",
+      "commitMessageTopic": "Python version",
+      "prBodyNotes": [
+        "**Remember:** also update `requires-python` in `pyproject.toml` to match the new Python version.",
+      ],
+    },
     // django-stubs-ext is a runtime dependency (project.dependencies) that must
     // stay in sync with django-stubs (in dependency-groups). Without this rule,
     // they land in different PRs and uv lock fails because django-stubs requires

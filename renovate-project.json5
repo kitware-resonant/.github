@@ -38,17 +38,7 @@
       "groupName": "resonant",
       "groupSlug": "resonant",
     },
-    // .python-version: for projects, track the latest stable Python.
-    // "docker" versioning: treats version components as independent segments
-    // (like Docker tags), so "3.12" stays "3.12" — not "3.12.0" or "3.12.11".
     {
-      "matchManagers": ["pyenv"],
-      "versioning": "docker",
-      "groupSlug": "python-version",
-      "groupName": ".python-version",
-      "prBodyNotes": [
-        "**Remember:** also update `requires-python` in `pyproject.toml` to match the new Python version.",
-      ],
     },
   ],
 }
