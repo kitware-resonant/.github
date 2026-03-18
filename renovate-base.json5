@@ -55,7 +55,6 @@
       "matchPackageNames": ["django", "django-stubs", "django-stubs-ext"],
       "matchUpdateTypes": ["major", "minor"],
       "groupName": "django",
-      "groupSlug": "django",
     },
     // Group all non-major @biomejs/biome updates together (npm devDependencies,
     // peerDependencies, and biome.jsonc schema from customManagers:biomeVersions).
