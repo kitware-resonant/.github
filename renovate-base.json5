@@ -71,6 +71,7 @@
     {
       "matchManagers": ["pyenv"],
       "versioning": "docker",
+      "groupName": "Python version",
       "commitMessageTopic": "Python version",
       "prBodyNotes": [
         "**Remember:** also update `requires-python` in `pyproject.toml` to match the new Python version.",
