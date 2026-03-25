@@ -81,5 +81,12 @@
         "**Remember:** also update `requires-python` in `pyproject.toml` to match the new Python version.",
       ],
     },
+    // Disable required_version updates in Terraform, as it's only a compatibility
+    // constraint and tight bounds make runtime compatibility difficult.
+    {
+      "matchManagers": ["terraform"],
+      "matchDepNames": ["hashicorp/terraform"],
+      "enabled": false,
+    }
   ],
 }
