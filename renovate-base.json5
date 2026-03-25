@@ -9,6 +9,10 @@
     "schedule:weekly",
   ],
 
+  // Wait 3 days before suggesting updates to reduce supply chain risk.
+  // Security updates bypass this and are raised immediately.
+  "minimumReleaseAge": "3 days",
+
   "lockFileMaintenance": {
     "enabled": true,
   },
