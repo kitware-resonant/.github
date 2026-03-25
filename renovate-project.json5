@@ -36,6 +36,7 @@
     {
       "matchPackageNames": ["django-resonant-settings", "copier"],
       "groupName": "resonant",
+      "minimumReleaseAge": "0 days",
     },
   ],
 }
