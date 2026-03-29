@@ -11,6 +11,9 @@
 
   // Wait 3 days before suggesting updates to reduce supply chain risk.
   // Security updates bypass this and are raised immediately.
+  // Automatically open a PR when Renovate deprecates config options.
+  "configMigration": true,
+
   "minimumReleaseAge": "3 days",
 
   "lockFileMaintenance": {
