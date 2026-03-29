@@ -11,11 +11,17 @@
 
   // Wait 3 days before suggesting updates to reduce supply chain risk.
   // Security updates bypass this and are raised immediately.
+  // Automatically open a PR when Renovate deprecates config options.
+  "configMigration": true,
+
   "minimumReleaseAge": "3 days",
 
   "lockFileMaintenance": {
     "enabled": true,
   },
+
+  // Separate each major update for individual review.
+  "separateMultipleMajor": true,
 
   "packageRules": [
     // Group all non-major updates into a single PR.
@@ -27,16 +33,11 @@
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
     },
-    // Separate each major update for individual review.
-    {
-      "matchUpdateTypes": ["major"],
-      "separateMultipleMajor": true,
-    },
     // Group non-major dev tool updates into their own PR, separate from the
     // main "all non-major" group. "dependency-groups" matches Python (PEP 735),
     // "devDependencies" matches npm. This allows library presets to automerge
-    // dev tools independently. Major dev tool updates fall through to the
-    // separateMultipleMajor rule above for individual review.
+    // dev tools independently. Major dev tool updates get their own PRs
+    // via the root-level separateMultipleMajor setting.
     {
       "matchDepTypes": ["dependency-groups", "devDependencies"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
