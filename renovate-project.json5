@@ -32,9 +32,14 @@
       "matchManagers": ["pep621"],
       "enabled": false,
     },
-    // Group Resonant cookiecutter updates
+    // Group Resonant cookiecutter updates with django-resonant-settings.
+    // The copier manager extracts the cookiecutter as a git URL (the depName),
+    // not as "copier" (which is the manager name, not a package name).
     {
-      "matchPackageNames": ["django-resonant-settings", "copier"],
+      "matchPackageNames": [
+        "django-resonant-settings",
+        "https://github.com/kitware-resonant/cookiecutter-resonant",
+      ],
       "groupName": "resonant",
       "minimumReleaseAge": "0 days",
     },
