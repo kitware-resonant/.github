@@ -11,11 +11,6 @@
     "github>kitware-resonant/.github:renovate-base.json5",
   ],
 
-  // Projects review lock maintenance PRs manually, so run monthly to reduce noise.
-  "lockFileMaintenance": {
-    "schedule": ["before 4am on the first day of the month"],
-  },
-
   // "pin" converts any range to an exact version (e.g., >=0 -> ==5.2.9,
   // >=4.2,<5 -> ==4.2.28, ^1.0.0 -> 1.2.0). This enforces == pins and
   // enables >=0 placeholders in project templates.

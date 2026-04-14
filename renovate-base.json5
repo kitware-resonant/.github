@@ -18,6 +18,8 @@
 
   "lockFileMaintenance": {
     "enabled": true,
+    // First Monday of the month, before 4am.
+    "schedule": ["* 0-3 * * 1#1"],
   },
 
   // Separate each major update for individual review.
