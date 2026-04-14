@@ -88,6 +88,17 @@
       "matchManagers": ["terraform"],
       "matchDepNames": ["hashicorp/terraform"],
       "enabled": false,
-    }
+    },
+    // Renovate cannot enforce minimumReleaseAge for these update types — it
+    // has no releaseTimestamp to check. Exempt them to avoid a permanently-
+    // pending stability-days status. See:
+    // https://github.com/renovatebot/renovate/issues/41652
+    {
+      "matchUpdateTypes": ["lockFileMaintenance", "replacement", "pin"],
+      "minimumReleaseAge": null,
+      "prBodyNotes": [
+        "⚠️ Minimum release age is not validated for this update type.",
+      ],
+    },
   ],
 }
