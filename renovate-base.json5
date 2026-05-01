@@ -108,6 +108,21 @@
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "enabled": false,
     },
+    // Track @types/node to the Node major version. Major bumps join the
+    // "Node version" PR; minor/patch updates continue to flow through the
+    // dev-deps group as usual. Two blocks because Renovate forbids combining
+    // matchUpdateTypes with allowedVersions in a single rule.
+    {
+      "matchPackageNames": ["@types/node"],
+      // Node LTS (even-numbered majors).
+      "allowedVersions": "/^\\d*[02468](\\..*)?$/",
+    },
+    {
+      "matchPackageNames": ["@types/node"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "Node version",
+      "commitMessageTopic": "Node version",
+    },
     // Disable required_version updates in Terraform, as it's only a compatibility
     // constraint and tight bounds make runtime compatibility difficult.
     {
