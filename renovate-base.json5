@@ -84,6 +84,30 @@
         "**Remember:** also update `requires-python` in `pyproject.toml` to match the new Python version.",
       ],
     },
+    // Group all Node.js version references and only bump on majors. Node
+    // here is tooling-only (Biome, Vite); minor/patch changes don't affect
+    // tooling output, and runtime resolution picks up patches automatically.
+    // Covers references such as:
+    // - `actions/setup-node` `node-version` in GitHub Actions workflows
+    // - `image: node:...` in docker-compose files
+    // - `ghcr.io/devcontainers/features/node` in devcontainer.json
+    // "rangeStrategy: replace" preserves the existing version-string shape,
+    // so existing references must already be in major-only form (`node:24`,
+    // not `node:24.15.0`) for this to behave as intended.
+    {
+      "matchDepNames": ["node", "ghcr.io/devcontainers/features/node"],
+      "rangeStrategy": "replace",
+      "versioning": "docker",
+      "groupName": "Node version",
+      "commitMessageTopic": "Node version",
+      // Node LTS (even-numbered majors).
+      "allowedVersions": "/^\\d*[02468](\\..*)?$/",
+    },
+    {
+      "matchDepNames": ["node", "ghcr.io/devcontainers/features/node"],
+      "matchUpdateTypes": ["minor", "patch", "digest"],
+      "enabled": false,
+    },
     // Disable required_version updates in Terraform, as it's only a compatibility
     // constraint and tight bounds make runtime compatibility difficult.
     {
