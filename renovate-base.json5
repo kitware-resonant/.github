@@ -6,7 +6,6 @@
   "extends": [
     "config:recommended",
     "customManagers:biomeVersions",
-    "schedule:weekly",
   ],
 
   // Wait 3 days before suggesting updates to reduce supply chain risk.
@@ -18,8 +17,6 @@
 
   "lockFileMaintenance": {
     "enabled": true,
-    // First Monday of the month, before 4am.
-    "schedule": ["* 0-3 * * 1#1"],
   },
 
   // Separate each major update for individual review.
