@@ -1,0 +1,40 @@
+{
+  // Renovate preset for core Resonant libraries maintained by the Resonant team.
+  //
+  // Usage in your repo's .github/renovate.json5:
+  //   { "extends": ["github>kitware-resonant/.github:renovate-library-core.json5"] }
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "github>kitware-resonant/.github:renovate-library.json5",
+    ":assignAndReview(brianhelba)",
+  ],
+
+  // Lock file maintenance and non-major dev tool updates are safe to automerge
+  // for core libraries — consumers never see the lock file, and CI catches breakage.
+  "lockFileMaintenance": {
+    "automerge": true,
+  },
+
+  "packageRules": [
+    // Automerge non-major dev tool updates (Python dependency-groups + npm
+    // devDependencies). The base config already groups these into a separate
+    // "dev dependencies" PR. They don't affect library consumers. Major dev
+    // tool updates are NOT automerged (they could break CI).
+    // Two rules because Renovate ANDs matchers within a rule (no OR support).
+    {
+      "matchDepTypes": ["dependency-groups", "devDependencies"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+    },
+    {
+      "matchPackageNames": ["@biomejs/biome"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+    },
+    {
+      "matchPackageNames": ["django-stubs-ext"],
+      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true,
+    },
+  ],
+}

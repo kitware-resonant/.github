@@ -11,8 +11,12 @@
   "extends": [
     "github>kitware-resonant/.github:renovate-base.json5",
     "schedule:weekly",
-    ":assignAndReview(brianhelba)",
   ],
+
+  "lockFileMaintenance": {
+    // First Monday of the month, before 4am.
+    "schedule": ["* 0-3 * * 1#1"],
+  },
 
   // "update-lockfile" is the key choice for libraries:
   // - In-range updates: only updates the lock file, leaves the manifest untouched
@@ -21,37 +25,9 @@
   // For pep621, "auto" -> "replace", which may not create lock-only PRs for
   // in-range releases. Setting this explicitly ensures both ecosystems get
   // lock-only PRs for every in-range direct dependency update.
-  // Lock file maintenance (transitive dep refresh) is safe to automerge for
-  // libraries — consumers never see the lock file, and CI catches breakage.
-  "lockFileMaintenance": {
-    "automerge": true,
-    // First Monday of the month, before 4am.
-    "schedule": ["* 0-3 * * 1#1"],
-  },
-
   "rangeStrategy": "update-lockfile",
 
   "packageRules": [
-    // Automerge non-major dev tool updates (Python dependency-groups + npm
-    // devDependencies). The base config already groups these into a separate
-    // "dev dependencies" PR. They don't affect library consumers. Major dev
-    // tool updates are NOT automerged (they could break CI).
-    // Two rules because Renovate ANDs matchers within a rule (no OR support).
-    {
-      "matchDepTypes": ["dependency-groups", "devDependencies"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true,
-    },
-    {
-      "matchPackageNames": ["@biomejs/biome"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true,
-    },
-    {
-      "matchPackageNames": ["django-stubs-ext"],
-      "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
-      "automerge": true,
-    },
     // .python-version: for libraries, keep at the oldest supported Python.
     // - separateMultipleMinor: one PR per minor (3.13, 3.14) for incremental bumps
     // - dependencyDashboardApproval: no automatic PRs, approve from Dashboard
