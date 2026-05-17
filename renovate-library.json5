@@ -10,6 +10,7 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "github>kitware-resonant/.github:renovate-base.json5",
+    "schedule:weekly",
     ":assignAndReview(brianhelba)",
   ],
 
@@ -24,6 +25,8 @@
   // libraries — consumers never see the lock file, and CI catches breakage.
   "lockFileMaintenance": {
     "automerge": true,
+    // First Monday of the month, before 4am.
+    "schedule": ["* 0-3 * * 1#1"],
   },
 
   "rangeStrategy": "update-lockfile",
