@@ -138,5 +138,10 @@
         "⚠️ Minimum release age is not validated for this update type.",
       ],
     },
+    // Pin until Celery is compatible with RabbitMQ 4.3.
+    {
+      "matchDepNames": ["rabbitmq"],
+      "allowedVersions": "<4.3",
+    },
   ],
 }
