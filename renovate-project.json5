@@ -51,10 +51,5 @@
       "matchPackageNames": ["django-resonant-settings"],
       "minimumReleaseAge": "0 days",
     },
-    // Pin until Celery is compatible with RabbitMQ 4.3.
-    {
-      "matchDepNames": ["rabbitmq"],
-      "allowedVersions": "<4.3",
-    },
   ],
 }
