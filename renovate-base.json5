@@ -133,10 +133,15 @@
     // https://github.com/renovatebot/renovate/issues/41652
     {
       "matchUpdateTypes": ["lockFileMaintenance", "replacement", "pin"],
+      // null instead of "0 days" to skip the check entirely
       "minimumReleaseAge": null,
       "prBodyNotes": [
         "⚠️ Minimum release age is not validated for this update type.",
       ],
+    },
+    {
+      "matchManagers": ["copier"],
+      "minimumReleaseAge": null,
     },
     // Pin until Celery is compatible with RabbitMQ 4.3.
     {
