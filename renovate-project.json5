@@ -41,6 +41,7 @@
     {
       "matchPackageNames": ["https://github.com/kitware-resonant/cookiecutter-resonant"],
       "groupName": "resonant-cookiecutter",
+      "commitMessageTopic": "resonant-cookiecutter",
       "prBodyNotes": [
         "**Remember:** also update `django-resonant-settings` in `pyproject.toml` to the matching version (`{{{newVersion}}}`).",
       ],

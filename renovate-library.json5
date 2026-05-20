@@ -36,5 +36,10 @@
       "separateMultipleMinor": true,
       "dependencyDashboardApproval": true,
     },
+    {
+      "matchPackageNames": ["https://github.com/kitware-resonant/resonant-meta-template"],
+      "groupName": "resonant-meta-template",
+      "commitMessageTopic": "resonant-meta-template",
+    },
   ],
 }
