@@ -120,6 +120,13 @@
       "groupName": "Node version",
       "commitMessageTopic": "Node version",
     },
+    // The lock file handles version pinning even without an explicit version
+    // constraint, so where a range exists in .tf files it's intentional for
+    // compatibility reasons — preserve it rather than pinning to an exact version.
+    {
+      "matchManagers": ["terraform"],
+      "rangeStrategy": "replace",
+    },
     // Disable required_version updates in Terraform, as it's only a compatibility
     // constraint and tight bounds make runtime compatibility difficult.
     {
