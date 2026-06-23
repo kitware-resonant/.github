@@ -151,6 +151,18 @@
       "matchManagers": ["copier", "devcontainer"],
       "minimumReleaseAge": null,
     },
+    // Resonant packages are first-party — trust them immediately.
+    {
+      "matchPackageNames": [
+        "django-auth-style",
+        "django-resonant-settings",
+        "django-resonant-utils",
+        "django-s3-file-field",
+        "@resonant/biome-config",
+        "@resonant/oauth-client",
+      ],
+      "minimumReleaseAge": "0 days",
+    },
     // Pin until Celery is compatible with RabbitMQ 4.3.
     {
       "matchDepNames": ["rabbitmq"],

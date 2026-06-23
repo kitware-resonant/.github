@@ -46,10 +46,5 @@
         "**Remember:** also update `django-resonant-settings` in `pyproject.toml` to the matching version (`{{{newVersion}}}`).",
       ],
     },
-    // django-resonant-settings is a first-party package — trust it immediately.
-    {
-      "matchPackageNames": ["django-resonant-settings"],
-      "minimumReleaseAge": "0 days",
-    },
   ],
 }
