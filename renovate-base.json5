@@ -6,6 +6,7 @@
   "extends": [
     "config:recommended",
     "customManagers:biomeVersions",
+    "helpers:pinGitHubActionDigestsToSemver",
   ],
 
   // Wait 3 days before suggesting updates to reduce supply chain risk.
@@ -140,7 +141,7 @@
     // https://github.com/renovatebot/renovate/issues/41652
     // https://github.com/renovatebot/renovate/issues/38656
     {
-      "matchUpdateTypes": ["lockFileMaintenance", "replacement", "pin"],
+      "matchUpdateTypes": ["lockFileMaintenance", "replacement", "pin", "pinDigest", "digest"],
       // null instead of "0 days" to skip the check entirely
       "minimumReleaseAge": null,
       "prBodyNotes": [
