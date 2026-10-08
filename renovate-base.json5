@@ -44,22 +44,46 @@
       "groupName": "dev dependencies",
       "groupSlug": "dev-deps",
     },
-    // django-stubs-ext is a runtime dependency that must stay in sync with
-    // django-stubs (dev dependency) for patch updates too.
-    {
-      "matchPackageNames": ["django-stubs-ext"],
-      "matchUpdateTypes": ["patch", "pin"],
-      "groupName": "dev dependencies",
-      "groupSlug": "dev-deps",
-    },
     // Django minor versions are significant, so pull major+minor out of the
-    // "all non-major" group into their own PR. Group with django-stubs and
-    // django-stubs-ext since stubs major.minor tracks Django's version.
-    // Patch updates are independent and stay in their default groups.
+    // "all non-major" group into their own PR. Patch updates are independent
+    // and stay in their default groups.
     {
-      "matchPackageNames": ["django", "django-stubs", "django-stubs-ext"],
+      "matchPackageNames": ["django"],
       "matchUpdateTypes": ["major", "minor"],
       "groupName": "django",
+    },
+    // Keep the type checking toolchain together in one PR. The "compatible-mypy"
+    // extra of django-stubs and djangorestframework-stubs always caps mypy below
+    // its next minor release (e.g. "mypy<2.4,>=1.13"). The cap is lifted in a
+    // later patch release of each stubs package: django-stubs usually within
+    // days of a mypy release, djangorestframework-stubs up to two weeks after
+    // that. A lone mypy minor bump therefore cannot lock until both stubs
+    // catch up, and would stall the whole "dev dependencies" group. mypy patch
+    // releases are always within the allowed range, so they stay in
+    // "dev dependencies". django-stubs-ext must stay in sync with django-stubs,
+    // so it follows the stubs here. Keeping these packages together takes
+    // precedence over keeping the stubs' major.minor aligned with the "django"
+    // PR.
+    {
+      "matchPackageNames": ["mypy", "django-stubs", "django-stubs-ext", "djangorestframework-stubs"],
+      // By default Renovate puts a major update on its own
+      // "renovate/major-mypy-django-stubs" branch even when it shares a group,
+      // splitting it from the releases of the other packages that unblock it.
+      // Own block because Renovate forbids combining matchUpdateTypes with
+      // separateMajorMinor in a single rule.
+      "separateMajorMinor": false,
+    },
+    {
+      "matchPackageNames": ["mypy"],
+      "matchUpdateTypes": ["major", "minor"],
+      "groupName": "mypy and django stubs",
+      "groupSlug": "mypy-django-stubs",
+    },
+    {
+      "matchPackageNames": ["django-stubs", "django-stubs-ext", "djangorestframework-stubs"],
+      "matchUpdateTypes": ["major", "minor", "patch", "pin"],
+      "groupName": "mypy and django stubs",
+      "groupSlug": "mypy-django-stubs",
     },
     // Group all non-major @biomejs/biome updates together (npm devDependencies,
     // peerDependencies, and biome.jsonc schema from customManagers:biomeVersions).
