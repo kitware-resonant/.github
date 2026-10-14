@@ -33,6 +33,15 @@
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
     },
+    // The base config puts every GitHub Actions update, including major, in
+    // the "dev dependencies" PR. Automerge them too, or any action update
+    // would hold back the whole PR. CI runs the new action versions directly,
+    // so a passing build is sufficient validation even for a major bump.
+    {
+      "matchManagers": ["github-actions"],
+      "matchDepTypes": ["action"],
+      "automerge": true,
+    },
     // django-stubs-ext is a runtime dependency, so the depType rule above
     // misses it. Without this, the "mypy and django stubs" PR would
     // never automerge.

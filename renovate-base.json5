@@ -94,6 +94,22 @@
       "groupName": "dev dependencies",
       "groupSlug": "dev-deps",
     },
+    // GitHub Actions ("uses:" steps in workflows) are CI tooling, so every
+    // update to them, including major, goes into the "dev dependencies" PR.
+    // Unlike Python/npm dev tool majors, action majors are routine and CI
+    // exercises the new version directly. No matchUpdateTypes, so all update
+    // types land here. separateMajorMinor must be false, or a major would go
+    // on its own "renovate/major-dev-deps" branch despite sharing the group
+    // (see the mypy rule above). Only depType "action" is matched: the same
+    // manager also extracts "services:" images and "runs-on" runners, which
+    // are not dev tooling.
+    {
+      "matchManagers": ["github-actions"],
+      "matchDepTypes": ["action"],
+      "separateMajorMinor": false,
+      "groupName": "dev dependencies",
+      "groupSlug": "dev-deps",
+    },
     // .python-version: use "docker" versioning so "3.12" stays "3.12" (not
     // "3.12.0" or "3.12.11"). Override the default PR title ("python Docker
     // tag") to say "Python version". Remind to update requires-python.
