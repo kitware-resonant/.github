@@ -17,10 +17,12 @@
 
   "packageRules": [
     // Automerge non-major dev tool updates (Python dependency-groups + npm
-    // devDependencies). The base config already groups these into a separate
-    // "dev dependencies" PR. They don't affect library consumers. Major dev
-    // tool updates are NOT automerged (they could break CI).
-    // Two rules because Renovate ANDs matchers within a rule (no OR support).
+    // devDependencies). The base config already groups these into separate
+    // "dev dependencies" and "mypy and django stubs" PRs. They don't
+    // affect library consumers. Major dev tool updates are NOT automerged
+    // (they could break CI); a group PR only automerges when every update in
+    // it does, so a stubs major holds back its whole PR.
+    // Separate rules because Renovate ANDs matchers within a rule (no OR support).
     {
       "matchDepTypes": ["dependency-groups", "devDependencies"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
@@ -31,6 +33,9 @@
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
       "automerge": true,
     },
+    // django-stubs-ext is a runtime dependency, so the depType rule above
+    // misses it. Without this, the "mypy and django stubs" PR would
+    // never automerge.
     {
       "matchPackageNames": ["django-stubs-ext"],
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
