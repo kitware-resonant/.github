@@ -128,12 +128,13 @@
     // Covers references such as:
     // - `actions/setup-node` `node-version` in GitHub Actions workflows
     // - `image: node:...` in docker-compose files
-    // - `ghcr.io/devcontainers/features/node` in devcontainer.json
+    // - the `version` option of `ghcr.io/devcontainers/features/node` in
+    //   devcontainer.json (extracted as `node`)
     // "rangeStrategy: replace" preserves the existing version-string shape,
     // so existing references must already be in major-only form (`node:24`,
     // not `node:24.15.0`) for this to behave as intended.
     {
-      "matchDepNames": ["node", "ghcr.io/devcontainers/features/node"],
+      "matchDepNames": ["node"],
       "rangeStrategy": "replace",
       "versioning": "docker",
       "groupName": "Node version",
@@ -142,7 +143,7 @@
       "allowedVersions": "/^\\d*[02468](\\..*)?$/",
     },
     {
-      "matchDepNames": ["node", "ghcr.io/devcontainers/features/node"],
+      "matchDepNames": ["node"],
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "enabled": false,
     },
