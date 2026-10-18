@@ -147,6 +147,17 @@
       "matchUpdateTypes": ["minor", "patch", "digest"],
       "enabled": false,
     },
+    // The dev container base image tag is `<image major>-ubuntu<release>`.
+    // Docker versioning would never change the suffix, so capture the Ubuntu
+    // release as the version and the image major as `build`, letting both be
+    // bumped. Only LTS releases are published, so no filtering is needed. A
+    // bump is rare and significant, so give it its own PR.
+    {
+      "matchDepNames": ["mcr.microsoft.com/devcontainers/base"],
+      "versioning": "regex:^(?<build>\\d+)-ubuntu(?<major>\\d+)\\.(?<minor>\\d+)$",
+      "groupName": "dev container base image",
+      "commitMessageTopic": "dev container base image",
+    },
     // Track @types/node to the Node major version. Major bumps join the
     // "Node version" PR; minor/patch updates continue to flow through the
     // dev-deps group as usual. Two blocks because Renovate forbids combining
