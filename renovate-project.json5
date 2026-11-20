@@ -46,5 +46,14 @@
         "**Remember:** also update `django-resonant-settings` in `pyproject.toml` to the matching version (`{{{newVersion}}}`).",
       ],
     },
+    // django-resonant-settings is tightly coupled to the Resonant cookiecutter
+    // and must match its version. It can't join the "resonant-cookiecutter"
+    // branch (see above), so don't let Renovate bump it at all; otherwise it
+    // lands in "all non-major dependencies" ahead of the template refresh.
+    // Bump it manually in the "resonant-cookiecutter" PR instead.
+    {
+      "matchPackageNames": ["django-resonant-settings"],
+      "enabled": false,
+    },
   ],
 }
