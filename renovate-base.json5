@@ -187,19 +187,33 @@
       "matchDepNames": ["hashicorp/terraform"],
       "enabled": false,
     },
-    // Renovate cannot enforce minimumReleaseAge for these update types and
-    // managers — it has no releaseTimestamp to check. Exempt them to avoid a
-    // permanently-pending stability-days status. See:
+    // Renovate cannot enforce minimumReleaseAge for lockFileMaintenance,
+    // replacement, and pin updates: it has no releaseTimestamp to check.
+    // Exempt them to avoid a permanently-pending stability-days status. See:
     // https://github.com/renovatebot/renovate/issues/41652
-    // https://github.com/renovatebot/renovate/issues/38656
+    // https://github.com/renovatebot/renovate/issues/39400
+    // https://github.com/renovatebot/renovate/issues/40288
+    // pinDigest can be checked (Renovate 44.4.0+), but it only freezes what a
+    // floating ref already resolves to, so holding it back would just prolong
+    // the unpinned state.
     {
-      "matchUpdateTypes": ["lockFileMaintenance", "replacement", "pin", "pinDigest", "digest"],
+      "matchUpdateTypes": ["lockFileMaintenance", "replacement", "pin", "pinDigest"],
       // null instead of "0 days" to skip the check entirely
       "minimumReleaseAge": null,
       "prBodyNotes": [
         "⚠️ Minimum release age is not validated for this update type.",
       ],
     },
+    // digest updates are checked (Renovate 44.3.1+) against the release
+    // timestamp of the version the digest belongs to. Docker registries other
+    // than Docker Hub provide no timestamp, so raise those unchecked rather
+    // than holding them forever. See:
+    // https://github.com/renovatebot/renovate/issues/38656
+    {
+      "matchUpdateTypes": ["digest"],
+      "minimumReleaseAgeBehaviour": "timestamp-optional",
+    },
+    // These managers' datasources provide no releaseTimestamp either.
     {
       "matchManagers": ["copier", "devcontainer"],
       "minimumReleaseAge": null,
